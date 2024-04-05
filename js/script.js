@@ -164,10 +164,10 @@ document.addEventListener("DOMContentLoaded", function() {
     image.onload = function() {
         // ctx.drawImage(image, 0, 0);
 
-        canvas.width = 400;
-        canvas.height = 400;
+        canvas.width = 460;
+        canvas.height = 460;
 
-        effect = new AsciiEffect(ctx, 400, 400); // Set the canvas size to 400x400
+        effect = new AsciiEffect(ctx, 460, 460); // Set the canvas size to 400x400
         effect.draw(6);
     }
 
