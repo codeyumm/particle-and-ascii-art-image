@@ -10,6 +10,18 @@ body{
     color: lightcoral;
 }
 
+header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-family: monospace;
+}
+
+header h1{
+    padding-top: 20px;
+}
+
 main{
     height: 100vh;
     width: 100vw;
@@ -19,6 +31,8 @@ main{
     align-items: center;
     flex-direction: column;
     gap: 12px;
+    font-size: 22px;
+    font-family: monospace;
 }
 
 canvas{

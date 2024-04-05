@@ -10,12 +10,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // canvas context - 2d
     const ctx = canvas.getContext('2d');
 
-    const image = new Image();
+    let image = new Image();
     image.crossOrigin = "Anonymous";
-    image.src = "./image/s2.png";
-
-    canvas.width = 400;
-    canvas.height = 400;
 
     const inputSlider = document.getElementById('resolution');
     const inputLabel = document.getElementById('resolutionLabel');
@@ -50,42 +46,64 @@ document.addEventListener("DOMContentLoaded", function() {
             this.#height = height;
             this.#ctx.drawImage(image, 0, 0, this.#width, this.#height);
             this.#pixels = this.#ctx.getImageData(0, 0, this.#width, this.#height);
-
         }
 
-        #convertToSymbol(g){
-                 if (g > 255) return '^';
-
-                else if (g > 250) return '@';
-                else if (g > 245) return '#';
-                else if (g > 240) return '$';
-                else if (g > 235) return '%';
-                else if (g > 230) return '&';
-                else if (g > 225) return '!';
-                else if (g > 220) return '*';
-                else if (g > 215) return '-';
-                else if (g > 210) return '_';
-                else if (g > 205) return '=';
-                else if (g > 200) return '+';
-                else if (g > 195) return '^';
-                else if (g > 190) return '"';
-                else if (g > 185) return '~';
-                else if (g > 180) return '|';
-                else if (g > 175) return '/';
-                else if (g > 170) return '\\';
-                else if (g > 165) return '?';
-                else if (g > 160) return '(';
-                else if (g > 155) return ')';
-                else if (g > 150) return '[';
-                else if (g > 145) return ']';
-                else if (g > 140) return '{';
-                else if (g > 135) return '}';
-                else if (g > 130) return '<';
-                else if (g > 125) return '>';
-                else if (g > 120) return ';';
-                else return ' '; // Default for other cases
-            }
-
+        #convertToSymbol(g) {
+            if (g > 255) return '^';
+            else if (g > 250) return '@';
+            else if (g > 245) return '#';
+            else if (g > 240) return '$';
+            else if (g > 235) return '%';
+            else if (g > 230) return '&';
+            else if (g > 225) return '!';
+            else if (g > 220) return '*';
+            else if (g > 215) return '-';
+            else if (g > 210) return '_';
+            else if (g > 205) return '=';
+            else if (g > 200) return '+';
+            else if (g > 195) return '^';
+            else if (g > 190) return '"';
+            else if (g > 185) return '~';
+            else if (g > 180) return '|';
+            else if (g > 175) return '/';
+            else if (g > 170) return '\\';
+            else if (g > 165) return '?';
+            else if (g > 160) return '(';
+            else if (g > 155) return ')';
+            else if (g > 150) return '[';
+            else if (g > 145) return ']';
+            else if (g > 140) return '{';
+            else if (g > 135) return '}';
+            else if (g > 130) return '<';
+            else if (g > 125) return '>';
+            else if (g > 120) return ';';
+            else if (g > 115) return ':';
+            else if (g > 110) return '^';
+            else if (g > 105) return '*';
+            else if (g > 100) return '.';
+            else if (g > 95) return '`';
+            else if (g > 90) return ',';
+            else if (g > 85) return '"';
+            else if (g > 80) return '^';
+            else if (g > 75) return '-';
+            else if (g > 70) return '_';
+            else if (g > 65) return '=';
+            else if (g > 60) return '+';
+            else if (g > 55) return '^';
+            else if (g > 50) return '"';
+            else if (g > 45) return '~';
+            else if (g > 40) return '|';
+            else if (g > 35) return '/';
+            else if (g > 30) return '\\';
+            else if (g > 25) return '?';
+            else if (g > 20) return '(';
+            else if (g > 15) return ')';
+            else if (g > 10) return '[';
+            else if (g > 5) return ']';
+            else if (g > 0) return '{';
+            else return '()'; // Default for other cases
+        }
+        
 
         #scanImage(cellSize){
             this.#imageCellArray = [];
@@ -109,17 +127,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
                         // don't convert the black cells
                         if (total > 255) this.#imageCellArray.push(new Cell(x, y, symbol, color));
-
                     }
-
-
                 }
             }
-
-            console.log(this.#imageCellArray);
         }
 
-     #drawAscii() {
+        #drawAscii() {
             this.#ctx.clearRect(0, 0, this.#width, this.#height);
             for (let i = 0; i < this.#imageCellArray.length; i++) {
                 this.#imageCellArray[i].draw(this.#ctx);
@@ -161,5 +174,17 @@ document.addEventListener("DOMContentLoaded", function() {
     // Set default value of slider to 1
     inputSlider.value = 1;
     inputLabel.innerHTML = 'Original image';
-    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+    // Event listener for file input change
+    document.getElementById('imageUpload').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function(event) {
+            image.src = event.target.result;
+        };
+
+        reader.readAsDataURL(file);
+    });
+
 });
